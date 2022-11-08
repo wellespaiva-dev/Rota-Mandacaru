@@ -6,6 +6,7 @@ const Stack = createNativeStackNavigator();
 
 /// SCREENS
 import Welcome from '../screens/Welcome';
+import Home from '../screens/Home';
 
 export default function Routes() {
   return (
@@ -19,6 +20,7 @@ export default function Routes() {
         }}
       >
         <Stack.Screen component={Welcome} name="Welcome" />
+        <Stack.Screen component={Home} name="Home" />
       </Stack.Navigator>
     </NavigationContainer>
   );

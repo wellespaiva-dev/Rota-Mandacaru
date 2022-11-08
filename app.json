@@ -27,7 +27,12 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.android.rotamandacau",
-      "versionCode": 1
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAeItCXKJvuDukHGqXtX6dC459PLoe2Bao"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -11,3 +11,5 @@ export const Information = styled.Text`
   font-size: 24px;
   color: #333;
 `;
+
+export const ButtonInformation = styled.TouchableOpacity``;
