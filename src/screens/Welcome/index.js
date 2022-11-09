@@ -1,16 +1,17 @@
 import React , {useEffect, useState} from 'react';
-import {Container, ButtonInformation, Information} from './styles';
+import {BackHandler} from 'react-native';
+import {Container} from './styles';
 
 import * as Location from 'expo-location';
 
 const Welcome = ({navigation}) => {
 
-  const [statusPermission, setStatusPermission] = useState(false);
-
   const requestPermmisionLocation = async () => {
     let {status} = await Location.requestForegroundPermissionsAsync();
     if(status === 'granted') {
-      setStatusPermission(true)
+      navigation.navigate('SelectVehicle')
+    } else {
+      BackHandler.exitApp()
     }
   }
   
@@ -19,11 +20,7 @@ const Welcome = ({navigation}) => {
   }, [Location]);
 
   return (
-    <Container>
-      <ButtonInformation onPress={() => statusPermission ? navigation.navigate('Home') : requestPermmisionLocation()} >
-        <Information>Rota Mandacaru</Information>
-      </ButtonInformation>
-    </Container>
+    <Container />
   )
 }
 

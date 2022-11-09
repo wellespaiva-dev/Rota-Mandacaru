@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import * as Location from 'expo-location';
+import React, {useState} from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import PickerStyle from '../../components/FormPicker/styles';
 import {
@@ -34,21 +33,7 @@ const Items = [
 
 const SelectVehicle = ({navigation}) => {
 
-  const [statusPermission, setStatusPermission] = useState(false);
   const [selected, setSelected] = useState('');
-
-  console.log(selected)
-
-  const requestPermmisionLocation = async () => {
-    let {status} = await Location.requestForegroundPermissionsAsync();
-    if(status === 'granted') {
-      setStatusPermission(true)
-    }
-  }
-  
-  useEffect(() => {
-    requestPermmisionLocation()
-  }, [Location]);
 
   return (
     <Container>
@@ -82,7 +67,7 @@ const SelectVehicle = ({navigation}) => {
         <ButtonContinue 
           activeOpacity={selected ? 0.4 : 1} 
           selected={selected} 
-          onPress={() => selected ? navigation.navigate('Home') : null}
+          onPress={() => selected ? navigation.navigate('SelectRoute') : null}
         >
           <ButtonText>Próximo</ButtonText>
           <IconRight />
