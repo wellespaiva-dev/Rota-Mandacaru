@@ -5,21 +5,21 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 /// SCREENS
-import Welcome from '../screens/Welcome';
 import Home from '../screens/Home';
+import SelectVehicle from '../screens/SelectVehicle';
 
 export default function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Welcome"
+        initialRouteName="SelectVehicle"
         screenOptions={{
           animationEnabled: false,
           headerShown: false,
           gestureEnabled: false,
         }}
       >
-        <Stack.Screen component={Welcome} name="Welcome" />
+        <Stack.Screen component={SelectVehicle} name="SelectVehicle" />
         <Stack.Screen component={Home} name="Home" />
       </Stack.Navigator>
     </NavigationContainer>
