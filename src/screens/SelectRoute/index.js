@@ -16,24 +16,11 @@ import {
   RouteLabelText,
 } from './styles';
 import HeaderBack from '../../components/HeaderBack';
-import IconRight from '../../assets/images/right.svg'
+import IconRight from '../../assets/images/right.svg';
 
-const Items = [
-  {
-    label: 'Corolla 2017 XEI',
-    value: 'Corolla'
-  },
-  {
-    label: 'Audi A4 2015',
-    value: 'Audi'
-  },
-  {
-    label: 'Harley Davidson XL1200 CA',
-    value: 'Harley'
-  },
-]
+const SelectRoute = ({navigation, route}) => {
 
-const SelectRoute = ({navigation}) => {
+  const params = route?.params;
 
   const [rotaA, setRotaA] = useState(false);
   const [rotaB, setRotaB] = useState(false);
@@ -55,6 +42,18 @@ const SelectRoute = ({navigation}) => {
     setRotaA(false)
     setRotaB(false)
     setRotaC(value)
+  }
+
+  const Next = () => {
+    if (rotaA) {
+      navigation.navigate('ValidateData', {...params, route: 'A'})
+    }
+    if (rotaB) {
+      navigation.navigate('ValidateData', {...params, route: 'B'})
+    }
+    if (rotaC) {
+      navigation.navigate('ValidateData', {...params, route: 'C'})
+    }
   }
 
   return (
@@ -106,13 +105,13 @@ const SelectRoute = ({navigation}) => {
         <SeparatorTitle />
         <ButtonContinue 
           activeOpacity={0.4}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => Next()}
         >
           <ButtonText>Próximo</ButtonText>
           <IconRight />
         </ButtonContinue>
         <SeparatorItems />
-        <ButtonBack>
+        <ButtonBack activeOpacity={0.4} onPress={() => navigation.goBack()}>
           <ButtonTextBack>Voltar</ButtonTextBack>
         </ButtonBack>
       </FormContainer>

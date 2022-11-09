@@ -19,15 +19,15 @@ import IconRight from '../../assets/images/right.svg'
 const Items = [
   {
     label: 'Corolla 2017 XEI',
-    value: 'Corolla'
+    value: 'Corolla 2017 XEI'
   },
   {
     label: 'Audi A4 2015',
-    value: 'Audi'
+    value: 'Audi A4 2015'
   },
   {
     label: 'Harley Davidson XL1200 CA',
-    value: 'Harley'
+    value: 'Harley Davidson XL1200 CA'
   },
 ]
 
@@ -67,7 +67,7 @@ const SelectVehicle = ({navigation}) => {
         <ButtonContinue 
           activeOpacity={selected ? 0.4 : 1} 
           selected={selected} 
-          onPress={() => selected ? navigation.navigate('SelectRoute') : null}
+          onPress={() => selected ? navigation.navigate('SelectRoute', {Vehicle: selected}) : null}
         >
           <ButtonText>Próximo</ButtonText>
           <IconRight />

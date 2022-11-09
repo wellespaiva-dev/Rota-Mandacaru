@@ -8,6 +8,7 @@ const Stack = createNativeStackNavigator();
 import Welcome from '../screens/Welcome';
 import SelectVehicle from '../screens/SelectVehicle';
 import SelectRoute from '../screens/SelectRoute';
+import ValidateData from '../screens/ValidateData';
 import Home from '../screens/Home';
 
 export default function Routes() {
@@ -24,6 +25,7 @@ export default function Routes() {
         <Stack.Screen component={Welcome} name="Welcome" />
         <Stack.Screen component={SelectVehicle} name="SelectVehicle" />
         <Stack.Screen component={SelectRoute} name="SelectRoute" />
+        <Stack.Screen component={ValidateData} name="ValidateData" />
         <Stack.Screen component={Home} name="Home" />
       </Stack.Navigator>
     </NavigationContainer>
