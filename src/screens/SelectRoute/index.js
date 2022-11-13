@@ -7,18 +7,15 @@ import {
   SeparatorTitle,
   Title,
   SubTitle,
-  ButtonContinue,
-  ButtonText,
-  ButtonBack,
-  ButtonTextBack,
   Row,
   RouteLabel,
   RouteLabelText,
 } from './styles';
 import HeaderBack from '../../components/HeaderBack';
 import IconRight from '../../assets/images/right.svg';
+import Button from '../../components/Button';
 
-const SelectRoute = ({navigation, route}) => {
+const SelectRoute = ({ navigation, route }) => {
 
   const params = route?.params;
 
@@ -46,20 +43,20 @@ const SelectRoute = ({navigation, route}) => {
 
   const Next = () => {
     if (rotaA) {
-      navigation.navigate('ValidateData', {...params, route: 'A'})
+      navigation.navigate('ValidateData', { ...params, route: 'A' })
     }
     if (rotaB) {
-      navigation.navigate('ValidateData', {...params, route: 'B'})
+      navigation.navigate('ValidateData', { ...params, route: 'B' })
     }
     if (rotaC) {
-      navigation.navigate('ValidateData', {...params, route: 'C'})
+      navigation.navigate('ValidateData', { ...params, route: 'C' })
     }
   }
 
   return (
     <Container>
-      <HeaderBack 
-        title='Selecione a rota' 
+      <HeaderBack
+        title='Selecione a rota'
         onPress={() => navigation.goBack()} />
       <FormContainer>
         <SeparatorTitle />
@@ -69,7 +66,7 @@ const SelectRoute = ({navigation, route}) => {
         <SeparatorTitle />
         <Row>
           <Checkbox
-            style={{borderRadius: 15, width: 25, height: 25}}
+            style={{ borderRadius: 15, width: 25, height: 25 }}
             color='#83BF4F'
             value={rotaA}
             onValueChange={(value) => ToogleRotaA(value)}
@@ -81,7 +78,7 @@ const SelectRoute = ({navigation, route}) => {
         <SeparatorItems />
         <Row>
           <Checkbox
-            style={{borderRadius: 15, width: 25, height: 25}}
+            style={{ borderRadius: 15, width: 25, height: 25 }}
             color='#83BF4F'
             value={rotaB}
             onValueChange={(value) => ToogleRotaB(value)}
@@ -93,7 +90,7 @@ const SelectRoute = ({navigation, route}) => {
         <SeparatorItems />
         <Row>
           <Checkbox
-            style={{borderRadius: 15, width: 25, height: 25}}
+            style={{ borderRadius: 15, width: 25, height: 25 }}
             color='#83BF4F'
             value={rotaC}
             onValueChange={(value) => ToogleRotaC(value)}
@@ -103,17 +100,20 @@ const SelectRoute = ({navigation, route}) => {
           </RouteLabel>
         </Row>
         <SeparatorTitle />
-        <ButtonContinue 
-          activeOpacity={0.4}
+        <Button
           onPress={() => Next()}
+          rightIcon={IconRight}
         >
-          <ButtonText>Próximo</ButtonText>
-          <IconRight />
-        </ButtonContinue>
+          Próximo
+        </Button>
         <SeparatorItems />
-        <ButtonBack activeOpacity={0.4} onPress={() => navigation.goBack()}>
-          <ButtonTextBack>Voltar</ButtonTextBack>
-        </ButtonBack>
+        <Button
+          variant='outlined'
+          color='black'
+          onPress={() => navigation.goBack()}
+        >
+          Voltar
+        </Button>
       </FormContainer>
     </Container>
   )

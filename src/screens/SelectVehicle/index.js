@@ -8,10 +8,9 @@ import {
   SeparatorTitle,
   Title,
   SubTitle,
-  ButtonContinue,
-  ButtonText,
 } from './styles';
 import HeaderBack from '../../components/HeaderBack';
+import Button from '../../components/Button';
 import IconCar from '../../assets/images/car.svg';
 import IconPicker from '../../assets/images/PickerIcon.svg';
 import IconRight from '../../assets/images/right.svg'
@@ -64,14 +63,13 @@ const SelectVehicle = ({navigation}) => {
         <SeparatorTitle/>
         <IconCar />
         <SeparatorTitle />
-        <ButtonContinue 
-          activeOpacity={selected ? 0.4 : 1} 
-          selected={selected} 
-          onPress={() => selected ? navigation.navigate('SelectRoute', {Vehicle: selected}) : null}
+        <Button 
+          disabled={!selected} 
+          onPress={() => navigation.navigate('SelectRoute', {Vehicle: selected})}
+          rightIcon={IconRight}
         >
-          <ButtonText>Próximo</ButtonText>
-          <IconRight />
-        </ButtonContinue>
+          Próximo
+        </Button>
       </FormContainer>
     </Container>
   )
