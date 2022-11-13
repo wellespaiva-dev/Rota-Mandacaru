@@ -72,7 +72,7 @@ export const ButtonTextBack = styled.Text`
 export const Label = styled.Text`
   font-size: 16px;
   color: #000000CC;
-  text-align: start;
+  text-align: left;
 `;
 
 export const RouteLabel = styled.View`
