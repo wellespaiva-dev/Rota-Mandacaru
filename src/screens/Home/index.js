@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {Dimensions} from 'react-native';
 import {Container, Distance, Time, SeparatorItems} from './styles';
-import MapView, {Marker, PROVIDER_GOOGLE,} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import * as Location from 'expo-location';
 import LoadingView from '../../components/LoadingView';
 import MapViewDirections from 'react-native-maps-directions';
@@ -15,33 +15,36 @@ const Home = () => {
 
   const [location, setLocation] = useState('');
   const [distance, setDistance] = useState('');
-  const [time, setTime] = useState(''); 
+  const [loading, setLoading] = useState(false);
+  const [time, setTime] = useState('');
 
   const getLocation = async () => {
     setLocation(await Location.getCurrentPositionAsync({}));
+    setLoading(false);
   }
 
   useEffect(() => {
+    setLoading(true)
     getLocation()
   }, [])
 
 
   return (
     <Container>
-      {location ? (
-        <>
+      {loading ? (<LoadingView />) : (
+         <>
           <MapView 
             style={{width: width - 20, height: height / 1.3}}
-            initialRegion={{latitude: location?.coords?.latitude , longitude: location?.coords?.longitude, latitudeDelta: Number(''), longitudeDelta: Number('')}}
+            initialRegion={{latitude: Number(location?.coords?.latitude || 0) , longitude: Number(location?.coords?.longitude || 0), latitudeDelta: Number('0'), longitudeDelta: Number('0')}}
             showsPointsOfInterest={true}
             provider={PROVIDER_GOOGLE}
             mapType='standard'
             ref={MapRef}
           >
-            <Marker coordinate={{latitude: location?.coords?.latitude , longitude: location?.coords?.longitude}}/>
+            <Marker coordinate={{latitude: Number(location?.coords?.latitude || 0) , longitude: Number(location?.coords?.longitude || 0), latitudeDelta: Number('0'), longitudeDelta: Number('0')}} />
             <MapViewDirections
-              origin={{latitude: location?.coords?.latitude , longitude: location?.coords?.longitude}}
-              destination={{latitude: -6.1123308 , longitude: -38.2139587}}
+              origin={{latitude: Number(location?.coords?.latitude || 0) , longitude: Number(location?.coords?.longitude || 0)}}
+              destination={{latitude: Number('-6.1109938'), longitude: Number('-38.2053013')}}
               apikey="AIzaSyAeItCXKJvuDukHGqXtX6dC459PLoe2Bao"
               strokeWidth={3}
               onReady={(result => {
@@ -61,11 +64,11 @@ const Home = () => {
             />
           </MapView>
           <SeparatorItems />
-          <Distance>Distância: {distance}m</Distance>
+          <Distance>Distância: {distance.toString().substring(0,4)}m</Distance>
           <SeparatorItems />
-          <Time>Tempo estimado: {time}</Time>
+          <Time>Tempo estimado: {time.toString().substring(0,4)}</Time>
         </>
-      ) : (<LoadingView />)}
+      )}
     </Container>
   )
 }
