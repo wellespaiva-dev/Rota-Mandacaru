@@ -1,72 +1,34 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {Dimensions} from 'react-native';
-import {Container, Distance, Time, SeparatorItems} from './styles';
-import MapView, {Marker, PROVIDER_GOOGLE,} from 'react-native-maps';
+import React, { useEffect, useState, useMemo } from 'react';
 import * as Location from 'expo-location';
 import LoadingView from '../../components/LoadingView';
-import MapViewDirections from 'react-native-maps-directions';
+import HeaderBack from '../../components/HeaderBack';
+import Map from '../../components/Map';
+import TRIPS from '../../mock/trips.json'
 
-const {width, height} = Dimensions.get('window');
+const getTrip = (tripId) => (TRIPS[tripId - 1]);
 
+const Home = ({ navigation, route }) => {
 
-const Home = () => {
-
-  const MapRef = useRef(null);
-
-  const [location, setLocation] = useState('');
-  const [distance, setDistance] = useState('');
-  const [time, setTime] = useState(''); 
+  const [location, setLocation] = useState(null);
+  const trip = useMemo(() => getTrip(route?.params?.trip), [route?.params?.trip]);
 
   const getLocation = async () => {
     setLocation(await Location.getCurrentPositionAsync({}));
   }
 
   useEffect(() => {
-    getLocation()
+    getLocation();
   }, [])
 
+  if (!location || !trip) return <LoadingView />;
 
   return (
-    <Container>
-      {location ? (
-        <>
-          <MapView 
-            style={{width: width - 20, height: height / 1.3}}
-            initialRegion={{latitude: location?.coords?.latitude , longitude: location?.coords?.longitude, latitudeDelta: Number(''), longitudeDelta: Number('')}}
-            showsPointsOfInterest={true}
-            provider={PROVIDER_GOOGLE}
-            mapType='standard'
-            ref={MapRef}
-          >
-            <Marker coordinate={{latitude: location?.coords?.latitude , longitude: location?.coords?.longitude}}/>
-            <MapViewDirections
-              origin={{latitude: location?.coords?.latitude , longitude: location?.coords?.longitude}}
-              destination={{latitude: -6.1123308 , longitude: -38.2139587}}
-              apikey="AIzaSyAeItCXKJvuDukHGqXtX6dC459PLoe2Bao"
-              strokeWidth={3}
-              onReady={(result => {
-                setDistance(result?.distance)
-                setTime(result?.duration);
-                MapRef.current.fitToCoordinates(
-                  result.coordinates, {
-                    edgePadding: {
-                      top: 50,
-                      bottom: 50,
-                      left: 50,
-                      right: 50,
-                    }
-                  },
-                )
-              })}
-            />
-          </MapView>
-          <SeparatorItems />
-          <Distance>Distância: {distance}m</Distance>
-          <SeparatorItems />
-          <Time>Tempo estimado: {time}</Time>
-        </>
-      ) : (<LoadingView />)}
-    </Container>
+    <>
+      <HeaderBack
+        title={trip.label}
+        onPress={() => navigation.goBack()} />
+      <Map currentCoords={location.coords} destinationCoords={trip.coords} />
+    </>
   )
 }
 

@@ -34,6 +34,7 @@ export const SubTitle = styled.Text`
 `;
 
 export const Row = styled.View`
+  margin-top: 16px;
   flex-direction: row;
   width: 100%;
   align-items: center;

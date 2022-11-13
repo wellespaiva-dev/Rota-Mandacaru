@@ -14,25 +14,13 @@ import Button from '../../components/Button';
 import IconCar from '../../assets/images/car.svg';
 import IconPicker from '../../assets/images/PickerIcon.svg';
 import IconRight from '../../assets/images/right.svg'
+import VEHICLES from '../../mock/vehicles.json';
 
-const Items = [
-  {
-    label: 'Corolla 2017 XEI',
-    value: 'Corolla 2017 XEI'
-  },
-  {
-    label: 'Audi A4 2015',
-    value: 'Audi A4 2015'
-  },
-  {
-    label: 'Harley Davidson XL1200 CA',
-    value: 'Harley Davidson XL1200 CA'
-  },
-]
+const SelectVehicle = ({navigation, route}) => {
 
-const SelectVehicle = ({navigation}) => {
+  const routeParams = route.params;
 
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState(routeParams?.vehicle ?? null);
 
   return (
     <Container>
@@ -45,12 +33,14 @@ const SelectVehicle = ({navigation}) => {
         <SeparatorTitle />
         <RNPickerSelect
           style={PickerStyle.styles}
-          onValueChange={(value) => setSelected(value)}
-          items={Items}
+          onValueChange={(value) => {
+            setSelected(value);
+          }}
+          items={VEHICLES}
           value={selected}
           placeholder={{
             label: 'Selecione o veículo',
-            value: '',
+            value: null,
             color: '#000',
           }}
           textInputProps={{
@@ -65,7 +55,7 @@ const SelectVehicle = ({navigation}) => {
         <SeparatorTitle />
         <Button 
           disabled={!selected} 
-          onPress={() => navigation.navigate('SelectRoute', {Vehicle: selected})}
+          onPress={() => navigation.navigate('SelectRoute', { ...routeParams, Vehicle: selected})}
           rightIcon={IconRight}
         >
           Próximo
