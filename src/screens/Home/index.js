@@ -14,7 +14,6 @@ const Home = ({navigation, route}) => {
 
   const getLocation = async () => {
     setLocation(await Location.getCurrentPositionAsync({}));
-    setLoading(false);
   }
 
   useEffect(() => {
