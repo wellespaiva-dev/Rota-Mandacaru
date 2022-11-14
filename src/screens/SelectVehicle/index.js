@@ -55,7 +55,7 @@ const SelectVehicle = ({navigation, route}) => {
         <SeparatorTitle />
         <Button 
           disabled={!selected} 
-          onPress={() => navigation.navigate('SelectRoute', { ...routeParams, Vehicle: selected})}
+          onPress={() => navigation.navigate('SelectRoute', {...routeParams, Vehicle: selected})}
           rightIcon={IconRight}
         >
           Próximo

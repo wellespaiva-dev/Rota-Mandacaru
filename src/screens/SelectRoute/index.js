@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Checkbox from 'expo-checkbox';
 import {
   Container,
@@ -16,7 +16,7 @@ import IconRight from '../../assets/images/right.svg';
 import Button from '../../components/Button';
 import TRIPS from '../../mock/trips.json';
 
-const SelectRoute = ({ navigation, route }) => {
+const SelectRoute = ({navigation, route}) => {
 
   const routeParams = route?.params;
 
@@ -36,7 +36,7 @@ const SelectRoute = ({ navigation, route }) => {
         {TRIPS.map((trip) => (
           <Row key={trip.value}>
             <Checkbox
-              style={{ borderRadius: 15, width: 25, height: 25 }}
+              style={{borderRadius: 15, width: 25, height: 25}}
               color='#83BF4F'
               value={selected === trip.value}
               onValueChange={(value) => setSelected(value ? trip.value : null)}
@@ -49,7 +49,7 @@ const SelectRoute = ({ navigation, route }) => {
         <SeparatorTitle />
         <Button
           disabled={!selected}
-          onPress={() => navigation.navigate('ValidateData', { ...routeParams, trip: selected })}
+          onPress={() => navigation.navigate('ValidateData', {...routeParams, trip: selected})}
           rightIcon={IconRight}
         >
           Próximo

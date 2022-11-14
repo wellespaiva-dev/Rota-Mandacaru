@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Dimensions } from "react-native";
+import {Dimensions} from "react-native";
 
-const { width } = Dimensions.get('window')
+const {width} = Dimensions.get('window')
 
 export const Container = styled.SafeAreaView`
   flex: 1;
