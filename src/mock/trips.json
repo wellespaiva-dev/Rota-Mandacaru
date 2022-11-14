@@ -1,0 +1,26 @@
+[
+  {
+    "value": 1,
+    "label": "Rota Apodi - Mossoró",
+    "coords": {
+      "latitude": -5.195062,
+      "longitude": -37.4116811
+    }
+  },
+  {
+    "value": 2,
+    "label": "Rota Apodi - UFERSA",
+    "coords": {
+      "latitude": -6.1045631,
+      "longitude": -38.185618
+    }
+  },
+  {
+    "value": 3,
+    "label": "Rota Apodi - Brisanet",
+    "coords": {
+      "latitude": -6.1684677,
+      "longitude": -38.4924517
+    }
+  }
+]

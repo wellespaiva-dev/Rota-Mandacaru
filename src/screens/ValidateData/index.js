@@ -15,18 +15,25 @@ import {
   RouteLabelText,
 } from './styles';
 import HeaderBack from '../../components/HeaderBack';
+import Button from '../../components/Button';
 import IconRight from '../../assets/images/right.svg';
+import TRIPS from '../../mock/trips.json';
+import VEHICLES from '../../mock/vehicles.json';
 
 const ValidateData = ({navigation, route}) => {
 
   const params = route?.params;
 
-  const getRoute = () => {
-    if (params?.route === 'A') return 'Rota Apodi - Mossoró'
-    if (params?.route === 'B') return 'Rota Apodi - UFERSA'
-    if (params?.route === 'C') return 'Rota Apodi - Brisanet'
+  const getTripLabel = () => {
+    if (TRIPS[params?.trip - 1]) return TRIPS[params?.trip - 1].label
 
     return 'Rota não encontrada.'
+  }
+
+  const getVehicleLabel = () => {
+    if (VEHICLES[params?.Vehicle - 1]) return VEHICLES[params?.Vehicle - 1].label
+
+    return 'Veículo não encontrado.'
   }
 
   return (
@@ -43,27 +50,30 @@ const ValidateData = ({navigation, route}) => {
         <Label>Veículo selecionado</Label>
         <SeparatorItems />
         <RouteLabel>
-          <RouteLabelText>{params?.Vehicle}</RouteLabelText>
+          <RouteLabelText>{getVehicleLabel()}</RouteLabelText>
         </RouteLabel>
         <SeparatorItems />
         <SeparatorItems />
         <Label>Rota selecionada</Label>
         <SeparatorItems />
         <RouteLabel>
-          <RouteLabelText>{getRoute()}</RouteLabelText>
+          <RouteLabelText>{getTripLabel()}</RouteLabelText>
         </RouteLabel>
         <SeparatorTitle />
-        <ButtonContinue 
-          activeOpacity={0.4}
+        <Button 
+          rightIcon={IconRight}
           onPress={() => navigation.navigate('Home', {...params})}
         >
-          <ButtonText>Ok, vamos lá!</ButtonText>
-          <IconRight />
-        </ButtonContinue>
+          Ok, vamos lá!
+        </Button>
         <SeparatorItems />
-        <ButtonBack activeOpacity={0.4} onPress={() => {}}>
-          <ButtonTextBack>Corrigir informações</ButtonTextBack>
-        </ButtonBack>
+        <Button
+          variant='outlined'
+          color='black'
+          onPress={() => navigation.navigate('SelectVehicle', {...params})}
+        >
+          Corrigir informações
+        </Button>
       </FormContainer>
     </Container>
   )

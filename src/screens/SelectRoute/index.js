@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Checkbox from 'expo-checkbox';
 import {
   Container,
@@ -7,113 +7,61 @@ import {
   SeparatorTitle,
   Title,
   SubTitle,
-  ButtonContinue,
-  ButtonText,
-  ButtonBack,
-  ButtonTextBack,
   Row,
   RouteLabel,
   RouteLabelText,
 } from './styles';
 import HeaderBack from '../../components/HeaderBack';
 import IconRight from '../../assets/images/right.svg';
+import Button from '../../components/Button';
+import TRIPS from '../../mock/trips.json';
 
 const SelectRoute = ({navigation, route}) => {
 
-  const params = route?.params;
+  const routeParams = route?.params;
 
-  const [rotaA, setRotaA] = useState(false);
-  const [rotaB, setRotaB] = useState(false);
-  const [rotaC, setRotaC] = useState(false);
-
-  const ToogleRotaA = (value) => {
-    setRotaA(value)
-    setRotaB(false)
-    setRotaC(false)
-  }
-
-  const ToogleRotaB = (value) => {
-    setRotaA(false)
-    setRotaB(value)
-    setRotaC(false)
-  }
-
-  const ToogleRotaC = (value) => {
-    setRotaA(false)
-    setRotaB(false)
-    setRotaC(value)
-  }
-
-  const Next = () => {
-    if (rotaA) {
-      navigation.navigate('ValidateData', {...params, route: 'A'})
-    }
-    if (rotaB) {
-      navigation.navigate('ValidateData', {...params, route: 'B'})
-    }
-    if (rotaC) {
-      navigation.navigate('ValidateData', {...params, route: 'C'})
-    }
-  }
+  const [selected, setSelected] = useState(routeParams.trip ?? null);
 
   return (
     <Container>
-      <HeaderBack 
-        title='Selecione a rota' 
+      <HeaderBack
+        title='Selecione a rota'
         onPress={() => navigation.goBack()} />
       <FormContainer>
         <SeparatorTitle />
         <Title>Boa escolha!</Title>
         <SeparatorItems />
         <SubTitle>Você selecionou o veículo desejado, agora precisa selecionar qual rota a ser realizada.</SubTitle>
-        <SeparatorTitle />
-        <Row>
-          <Checkbox
-            style={{borderRadius: 15, width: 25, height: 25}}
-            color='#83BF4F'
-            value={rotaA}
-            onValueChange={(value) => ToogleRotaA(value)}
-          />
-          <RouteLabel>
-            <RouteLabelText>Rota Apodi - Mossoró</RouteLabelText>
-          </RouteLabel>
-        </Row>
         <SeparatorItems />
-        <Row>
-          <Checkbox
-            style={{borderRadius: 15, width: 25, height: 25}}
-            color='#83BF4F'
-            value={rotaB}
-            onValueChange={(value) => ToogleRotaB(value)}
-          />
-          <RouteLabel>
-            <RouteLabelText>Rota Apodi - UFERSA</RouteLabelText>
-          </RouteLabel>
-        </Row>
-        <SeparatorItems />
-        <Row>
-          <Checkbox
-            style={{borderRadius: 15, width: 25, height: 25}}
-            color='#83BF4F'
-            value={rotaC}
-            onValueChange={(value) => ToogleRotaC(value)}
-          />
-          <RouteLabel>
-            <RouteLabelText>Rota Apodi - Brisanet</RouteLabelText>
-          </RouteLabel>
-        </Row>
+        {TRIPS.map((trip) => (
+          <Row key={trip.value}>
+            <Checkbox
+              style={{borderRadius: 15, width: 25, height: 25}}
+              color='#83BF4F'
+              value={selected === trip.value}
+              onValueChange={(value) => setSelected(value ? trip.value : null)}
+            />
+            <RouteLabel>
+              <RouteLabelText>{trip.label}</RouteLabelText>
+            </RouteLabel>
+          </Row>
+        ))}
         <SeparatorTitle />
-        <ButtonContinue 
-          activeOpacity={0.4}
-          onPress={() => Next()}
+        <Button
+          disabled={!selected}
+          onPress={() => navigation.navigate('ValidateData', {...routeParams, trip: selected})}
+          rightIcon={IconRight}
         >
-          <ButtonText>Próximo</ButtonText>
-          <IconRight />
-        </ButtonContinue>
+          Próximo
+        </Button>
         <SeparatorItems />
-        <ButtonBack activeOpacity={0.4} onPress={() => navigation.goBack()}>
-          <ButtonTextBack>Voltar</ButtonTextBack>
-        </ButtonBack>
+        <Button
+          variant='outlined'
+          color='black'
+          onPress={() => navigation.goBack()}
+        >
+          Voltar
+        </Button>
       </FormContainer>
     </Container>
   )
