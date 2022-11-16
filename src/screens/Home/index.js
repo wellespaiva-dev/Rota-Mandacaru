@@ -10,6 +10,7 @@ const getTrip = (tripId) => (TRIPS[tripId - 1]);
 const Home = ({navigation, route}) => {
 
   const [location, setLocation] = useState(null);
+  const [isStarting, setIsStating] = useState(false);
   const trip = useMemo(() => getTrip(route?.params?.trip), [route?.params?.trip]);
 
   const getLocation = async () => {
@@ -27,7 +28,7 @@ const Home = ({navigation, route}) => {
       <HeaderBack
         title={trip.label}
         onPress={() => navigation.goBack()} />
-      <Map currentCoords={location.coords} destinationCoords={trip.coords} />
+      <Map currentCoords={isStarting ? location.coords : trip.start_coords} destinationCoords={trip.destination_coords} />
     </>
   )
 }
