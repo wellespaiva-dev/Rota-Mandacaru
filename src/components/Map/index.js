@@ -1,6 +1,6 @@
-import React, {useRef} from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import React, { useRef } from 'react';
+import { Dimensions, StyleSheet } from 'react-native';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 
 const { width, height } = Dimensions.get('window');
@@ -8,7 +8,7 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-const Map = ({currentCoords, destinationCoords, onReady}) => {
+const Map = ({ currentCoords, destinationCoords, onReady, heading=null }) => {
 
   const MapRef = useRef(null);
 
@@ -26,13 +26,21 @@ const Map = ({currentCoords, destinationCoords, onReady}) => {
       mapType='standard'
       ref={MapRef}
     >
-      <Marker coordinate={{latitude: currentCoords.latitude, longitude: currentCoords.longitude}} />
-      <Marker coordinate={{latitude: destinationCoords.latitude, longitude: destinationCoords.longitude}} />
+      <Marker
+        coordinate={{ latitude: currentCoords.latitude, longitude: currentCoords.longitude }}
+        style={{
+          transform: [{
+            rotate: heading ? '0deg' : `${heading}deg`
+          }]
+        }}
+      />
+      <Marker coordinate={{ latitude: destinationCoords.latitude, longitude: destinationCoords.longitude }} />
       <MapViewDirections
-        origin={{latitude: currentCoords.latitude, longitude: currentCoords.longitude}}
-        destination={{latitude: destinationCoords.latitude, longitude: destinationCoords.longitude}}
+        origin={{ latitude: currentCoords.latitude, longitude: currentCoords.longitude }}
+        destination={{ latitude: destinationCoords.latitude, longitude: destinationCoords.longitude }}
         apikey="AIzaSyAeItCXKJvuDukHGqXtX6dC459PLoe2Bao"
         strokeWidth={3}
+        strokeColor="blue"
         onReady={(result) => {
           MapRef.current.fitToCoordinates(
             result.coordinates,

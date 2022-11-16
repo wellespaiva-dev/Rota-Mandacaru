@@ -33,8 +33,8 @@ export const ButtonLayout = styled.TouchableOpacity`
   border: ${({ selected, variant, color }) => variant === 'outlined' ? `solid 1px ${getColor(selected, color)}` : 'none'};
   align-items: center;
   justify-content: center;
-  padding: 10px 0 10px 0;
-  width: ${width - 40}px;
+  padding: 10px 10px 10px 18px;
+  width: ${({fullWidth}) => fullWidth ? `${width - 40}px` : 'auto'};
   border-radius: 100px;
   flex-direction: row;
 `

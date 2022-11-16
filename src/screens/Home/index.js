@@ -3,14 +3,16 @@ import * as Location from 'expo-location';
 import LoadingView from '../../components/LoadingView';
 import HeaderBack from '../../components/HeaderBack';
 import Map from '../../components/Map';
+import Button from '../../components/Button';
 import TRIPS from '../../mock/trips.json'
+import { BottomBox, SeparatorItems } from './styles';
 
 const getTrip = (tripId) => (TRIPS[tripId - 1]);
 
 const Home = ({navigation, route}) => {
 
   const [location, setLocation] = useState(null);
-  const [isStarting, setIsStating] = useState(false);
+  const [isStarting, setIsStarting] = useState(false);
   const trip = useMemo(() => getTrip(route?.params?.trip), [route?.params?.trip]);
 
   const getLocation = async () => {
@@ -28,7 +30,19 @@ const Home = ({navigation, route}) => {
       <HeaderBack
         title={trip.label}
         onPress={() => navigation.goBack()} />
-      <Map currentCoords={isStarting ? location.coords : trip.start_coords} destinationCoords={trip.destination_coords} />
+      <Map heading={location.coords.heading} currentCoords={isStarting ? location.coords : trip.start_coords} destinationCoords={trip.destination_coords} />
+      <BottomBox>
+        <Button onPress={() => setIsStarting(true)}>Iniciar</Button>
+        <SeparatorItems />  
+        <Button
+          fullWidth={false}
+          variant='outlined'
+          color='black'
+          onPress={() => navigation.goBack()}
+        >
+          Escolher outra rota
+        </Button>
+      </BottomBox>    
     </>
   )
 }
