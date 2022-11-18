@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {BackHandler} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import PickerStyle from '../../components/FormPicker/styles';
 import {
@@ -21,6 +22,12 @@ const SelectVehicle = ({navigation, route}) => {
   const routeParams = route.params;
 
   const [selected, setSelected] = useState(routeParams?.vehicle ?? null);
+
+  useEffect(() => {
+    BackHandler.addEventListener('backPress', () => BackHandler.exitApp())
+
+    return BackHandler.removeEventListener('backPress', () => true)
+  }, [])
 
   return (
     <Container>

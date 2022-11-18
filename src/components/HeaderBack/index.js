@@ -17,7 +17,7 @@ const HeaderBack = ({
           <Back />
         </ButtonBack>
       )}
-      <Title isButtonBack={isButtonBack}>{title}</Title>
+      <Title>{title}</Title>
     </Container>
   )
 }
