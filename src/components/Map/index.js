@@ -8,7 +8,7 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-const Map = ({ currentCoords, destinationCoords, onReady, heading=null }) => {
+const Map = ({ currentCoords, destinationCoords, onReady }) => {
 
   const MapRef = useRef(null);
 
@@ -21,7 +21,7 @@ const Map = ({ currentCoords, destinationCoords, onReady, heading=null }) => {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       }}
-      showsPointsOfInterest={true}
+      showsPointsOfInterest={false}
       provider={PROVIDER_GOOGLE}
       mapType='standard'
       ref={MapRef}
@@ -30,7 +30,7 @@ const Map = ({ currentCoords, destinationCoords, onReady, heading=null }) => {
         coordinate={{ latitude: currentCoords.latitude, longitude: currentCoords.longitude }}
         style={{
           transform: [{
-            rotate: heading ? '0deg' : `${heading}deg`
+            rotate: !currentCoords?.heading ? '0deg' : `${currentCoords?.heading}deg`
           }]
         }}
       />
