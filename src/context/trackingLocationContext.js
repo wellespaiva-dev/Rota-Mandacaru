@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import {createContext, useEffect, useState} from "react";
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
 
@@ -6,7 +6,7 @@ const LOCATION_TRACKING = 'location-tracking';
 
 export const LocationTrackingContext = createContext();
 
-export const LocationTrackingProvider = ({ children }) => {
+export const LocationTrackingProvider = ({children}) => {
 
   const [location, setLocation] = useState(null);
   const [isTracking, setIsTracking] = useState(false);
@@ -28,22 +28,16 @@ export const LocationTrackingProvider = ({ children }) => {
   };
 
   const startLocation = () => {
-
     startLocationTracking();
   }
 
   useEffect(() => {
-
-    TaskManager.defineTask(LOCATION_TRACKING, async ({ data, error }) => {
-
+    TaskManager.defineTask(LOCATION_TRACKING, async ({data, error}) => {
       if (error) {
-
         setError(error);
         return;
       }
-
-      const { locations } = data;
-
+      const {locations} = data;
       setLocation(locations[0]);
     });
   }, []);

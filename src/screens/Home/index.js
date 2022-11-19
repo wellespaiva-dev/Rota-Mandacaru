@@ -1,18 +1,22 @@
-import React, { useEffect, useMemo } from 'react';
+import React, {useEffect, useMemo} from 'react';
 import LoadingView from '../../components/LoadingView';
 import HeaderBack from '../../components/HeaderBack';
 import Map from '../../components/Map';
 import Button from '../../components/Button';
 import TRIPS from '../../mock/trips.json'
-import { BottomBox, SeparatorItems } from './styles';
-import { useTrackingLocation } from '../../hooks/useTrackingLocation';
+import {BottomBox, SeparatorItems} from './styles';
+import {useTrackingLocation} from '../../hooks/useTrackingLocation';
 
 const getTrip = (tripId) => (TRIPS[tripId - 1]);
 
 const Home = ({ navigation, route }) => {
 
   const trip = useMemo(() => getTrip(route?.params?.trip), [route?.params?.trip]);
-  const { location, isTracking, startLocation } = useTrackingLocation();
+  const {location, isTracking, startLocation} = useTrackingLocation();
+
+  console.log(location);
+  console.log('-------------------');
+  console.log(isTracking);
 
   if (!trip) return <LoadingView />;
 

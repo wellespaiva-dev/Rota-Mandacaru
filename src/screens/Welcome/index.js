@@ -18,15 +18,13 @@ const Welcome = ({ navigation }) => {
 
   const requestPermmisionLocation = async () => {
 
-    const { status: foregroundPermission } = await Location.requestForegroundPermissionsAsync();
-    const { status: backgroundPermission} = await Location.requestBackgroundPermissionsAsync();
+    const {status: foregroundPermission} = await Location.requestForegroundPermissionsAsync();
+    const {status: backgroundPermission} = await Location.requestBackgroundPermissionsAsync();
 
     if (foregroundPermission === 'granted' && backgroundPermission === 'granted') {
-
       setVisible(false);
       navigation.navigate('SelectVehicle');
     } else {
-
       setType('2');
       setInformation('Para fazer uma boa utilização do app, é importante que o app tenha acesso a sua localização. Mude as permisões nas configurações do app.')
       setVisible(true);
@@ -66,7 +64,7 @@ const Welcome = ({ navigation }) => {
     if (isFocused) {
       verifyActivedLocation()
     }
-    setTimeout(() => { setRefleshScreen(refleshScreen + 1) }, 2000);
+    setTimeout(() => {setRefleshScreen(refleshScreen + 1) }, 2000);
   }, [isFocused, refleshScreen]);
 
 

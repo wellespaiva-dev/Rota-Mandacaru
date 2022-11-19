@@ -13,7 +13,7 @@ import {
 import HeaderBack from '../../components/HeaderBack';
 import Button from '../../components/Button';
 import IconCar from '../../assets/images/car.svg';
-import IconPicker from '../../assets/images/PickerIcon.svg';
+// import IconPicker from '../../assets/images/PickerIcon.svg';
 import IconRight from '../../assets/images/right.svg'
 import VEHICLES from '../../mock/vehicles.json';
 
@@ -55,7 +55,7 @@ const SelectVehicle = ({navigation, route}) => {
             fontSize: 16,
             placeholderTextColor: '#000',
           }}
-          Icon={() => <IconPicker />}
+          // Icon={() => <IconPicker />}
         />
         <SeparatorTitle/>
         <IconCar />
