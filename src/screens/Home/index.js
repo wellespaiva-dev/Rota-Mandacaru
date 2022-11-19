@@ -14,10 +14,6 @@ const Home = ({ navigation, route }) => {
   const trip = useMemo(() => getTrip(route?.params?.trip), [route?.params?.trip]);
   const {location, isTracking, startLocation} = useTrackingLocation();
 
-  console.log(location);
-  console.log('-------------------');
-  console.log(isTracking);
-
   if (!trip) return <LoadingView />;
 
   return (
