@@ -18,10 +18,10 @@ const Welcome = ({ navigation }) => {
 
   const requestPermmisionLocation = async () => {
 
-    // const {status: foregroundPermission} = await Location.requestForegroundPermissionsAsync();
+    const {status: foregroundPermission} = await Location.requestForegroundPermissionsAsync();
     const {status: backgroundPermission} = await Location.requestBackgroundPermissionsAsync();
 
-    if (backgroundPermission === 'granted') {
+    if (foregroundPermission === 'granted' && backgroundPermission === 'granted') {
       setVisible(false);
       navigation.navigate('SelectVehicle');
     } else {
