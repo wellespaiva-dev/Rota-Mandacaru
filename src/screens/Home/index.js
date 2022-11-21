@@ -1,4 +1,6 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
+import {useAndroidBackHandler} from "react-navigation-backhandler";
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import LoadingView from '../../components/LoadingView';
 import HeaderBack from '../../components/HeaderBack';
 import Map from '../../components/Map';
@@ -9,7 +11,21 @@ import {useTrackingLocation} from '../../hooks/useTrackingLocation';
 
 const getTrip = (tripId) => (TRIPS[tripId - 1]);
 
-const Home = ({ navigation, route }) => {
+const Home = ({route}) => {
+
+  const isFocused = useIsFocused();
+
+  const navigation = useNavigation();
+
+  useAndroidBackHandler(() => {
+    if (isFocused) {
+      navigation.goBack();
+
+      return true
+    }
+
+    return false;
+  })
 
   const trip = useMemo(() => getTrip(route?.params?.trip), [route?.params?.trip]);
   const {location, isTracking, startLocation} = useTrackingLocation();

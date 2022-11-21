@@ -1,4 +1,6 @@
 import React from 'react';
+import {useAndroidBackHandler} from "react-navigation-backhandler";
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {
   Container,
   FormContainer,
@@ -6,10 +8,6 @@ import {
   SeparatorTitle,
   Title,
   SubTitle,
-  ButtonContinue,
-  ButtonText,
-  ButtonBack,
-  ButtonTextBack,
   Label,
   RouteLabel,
   RouteLabelText,
@@ -20,9 +18,23 @@ import IconRight from '../../assets/images/right.svg';
 import TRIPS from '../../mock/trips.json';
 import VEHICLES from '../../mock/vehicles.json';
 
-const ValidateData = ({navigation, route}) => {
+const ValidateData = ({route}) => {
 
   const params = route?.params;
+
+  const isFocused = useIsFocused();
+
+  const navigation = useNavigation();
+
+  useAndroidBackHandler(() => {
+    if (isFocused) {
+      navigation.goBack();
+
+      return true
+    }
+
+    return false;
+  })
 
   const getTripLabel = () => {
     if (TRIPS[params?.trip - 1]) return TRIPS[params?.trip - 1].label

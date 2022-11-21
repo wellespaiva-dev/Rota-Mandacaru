@@ -1,15 +1,17 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { BackHandler, Linking, RefreshControl } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
-import { Container } from './styles';
+import React, {useEffect, useState} from 'react';
+import {Linking} from 'react-native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {Container} from './styles';
 
 import * as Location from 'expo-location';
 
 import ModalSettingsDevice from '../../components/AlertCustom/SettingsDevice';
 
-const Welcome = ({ navigation }) => {
+const Welcome = () => {
 
   const isFocused = useIsFocused();
+
+  const navigation = useNavigation();
 
   const [visible, setVisible] = useState(false);
   const [information, setInformation] = useState('');
