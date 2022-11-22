@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import Checkbox from 'expo-checkbox';
+import {useAndroidBackHandler} from "react-navigation-backhandler";
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {
   Container,
   FormContainer,
@@ -16,11 +18,25 @@ import IconRight from '../../assets/images/right.svg';
 import Button from '../../components/Button';
 import TRIPS from '../../mock/trips.json';
 
-const SelectRoute = ({navigation, route}) => {
+const SelectRoute = ({route}) => {
+
+  const isFocused = useIsFocused();
+
+  const navigation = useNavigation();
 
   const routeParams = route?.params;
 
   const [selected, setSelected] = useState(routeParams.trip ?? null);
+
+  useAndroidBackHandler(() => {
+    if (isFocused) {
+      navigation.goBack();
+
+      return true
+    }
+
+    return false;
+  })
 
   return (
     <Container>

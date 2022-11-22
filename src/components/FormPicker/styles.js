@@ -11,7 +11,7 @@ export default StyleSheet.create({
       paddingLeft: 18,
       borderRadius: 10,
       borderWidth: 1,
-      borderColor: '#000',
+      borderColor: '#EBEBEB',
     },
     inputAndroid: {
       paddingRight: 30, // to ensure the text is never behind the icon
@@ -22,7 +22,7 @@ export default StyleSheet.create({
       paddingLeft: 18,
       borderRadius: 10,
       borderWidth: 1,
-      borderColor: '#000',
+      borderColor: '#EBEBEB',
     },
     iconContainer: {
       position: 'absolute',

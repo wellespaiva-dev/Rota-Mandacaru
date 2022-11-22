@@ -1,15 +1,17 @@
-import React , {useEffect, useState, useCallback} from 'react';
-import {BackHandler, Linking, RefreshControl} from 'react-native';
-import {useIsFocused} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {Linking} from 'react-native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {Container} from './styles';
 
 import * as Location from 'expo-location';
 
 import ModalSettingsDevice from '../../components/AlertCustom/SettingsDevice';
 
-const Welcome = ({navigation}) => {
+const Welcome = () => {
 
   const isFocused = useIsFocused();
+
+  const navigation = useNavigation();
 
   const [visible, setVisible] = useState(false);
   const [information, setInformation] = useState('');
@@ -17,8 +19,11 @@ const Welcome = ({navigation}) => {
   const [refleshScreen, setRefleshScreen] = useState(0);
 
   const requestPermmisionLocation = async () => {
-    let {status} = await Location.requestForegroundPermissionsAsync();
-    if(status === 'granted') {
+
+    const {status: foregroundPermission} = await Location.requestForegroundPermissionsAsync();
+    const {status: backgroundPermission} = await Location.requestBackgroundPermissionsAsync();
+
+    if (foregroundPermission === 'granted' && backgroundPermission === 'granted') {
       setVisible(false);
       navigation.navigate('SelectVehicle');
     } else {
@@ -29,11 +34,15 @@ const Welcome = ({navigation}) => {
   }
 
   const verifyActivedLocation = async () => {
+
     const statusAux = await Location.hasServicesEnabledAsync();
+
     if (statusAux) {
+
       setVisible(false);
       requestPermmisionLocation();
     } else {
+
       setType('1');
       setInformation('Para fazer uma boa utilização do app, é importante que sua localização esteja ativada. Ative a localização do seu dispositivo.')
       setVisible(true);
@@ -43,7 +52,7 @@ const Welcome = ({navigation}) => {
   const getOnPress = async () => {
     if (type === '1') {
       await Linking.sendIntent("android.settings.SETTINGS");
-    //  await Linking.openURL("App-prefs:root=General");
+      //  await Linking.openURL("App-prefs:root=General");
     } else if (type === '2') {
       await Linking.openSettings();
       // await Linking.openURL("app-settings:");
@@ -52,19 +61,18 @@ const Welcome = ({navigation}) => {
     await Linking.sendIntent("android.settings.SETTINGS");
     // await Linking.openURL("App-prefs:root=General");
   }
-  
+
   useEffect(() => {
     if (isFocused) {
       verifyActivedLocation()
     }
-    console.log(refleshScreen);
-    setTimeout(() => {setRefleshScreen(refleshScreen + 1)}, 2000);
+    setTimeout(() => {setRefleshScreen(refleshScreen + 1) }, 2000);
   }, [isFocused, refleshScreen]);
 
 
   return (
     <>
-      <ModalSettingsDevice 
+      <ModalSettingsDevice
         visible={visible}
         setVisible={setVisible}
         information={information}
