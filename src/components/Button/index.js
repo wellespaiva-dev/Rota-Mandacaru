@@ -4,7 +4,7 @@ import {
   ButtonText,
 } from './styles';
 
-const Button = ({ fullWidth = true, disabled, onPress, leftIcon, rightIcon, color = 'primary', variant = 'contained', children }) => {
+const Button = ({ fullWidth = true, disabled, onPress, leftIcon, rightIcon, color = 'primary', variant = 'contained', children, _width = null }) => {
 
   return (
     <ButtonLayout
@@ -14,6 +14,7 @@ const Button = ({ fullWidth = true, disabled, onPress, leftIcon, rightIcon, colo
       selected={!disabled}
       onPress={() => !disabled && onPress()}
       fullWidth={fullWidth}
+      _width={_width}
     >
       {leftIcon && leftIcon()}
       <ButtonText variant={variant}>{children}</ButtonText>

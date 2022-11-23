@@ -20,16 +20,14 @@ export const BottomBox = styled.View`
   border-top-right-radius: 15px;
 `;
 
-export const Distance = styled.Text`
-  font-size: 20px;
-  color: #333;
-`;
-
-export const Time = styled.Text`
-  font-size: 20px;
-  color: #333;
-`;
-
 export const SeparatorItems = styled.View`
   height: 20px;
+`;
+
+export const Row = styled.View`
+  flex-direction: row;
+`;
+
+export const SeparatorHorizontal = styled.View`
+  width: 20px;
 `;

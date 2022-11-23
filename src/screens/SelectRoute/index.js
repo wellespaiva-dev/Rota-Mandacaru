@@ -16,7 +16,7 @@ import {
 import HeaderBack from '../../components/HeaderBack';
 import IconRight from '../../assets/images/right.svg';
 import Button from '../../components/Button';
-import TRIPS from '../../mock/trips.json';
+import {useTrackingLocation} from '../../hooks/useTrackingLocation';
 
 const SelectRoute = ({route}) => {
 
@@ -27,6 +27,10 @@ const SelectRoute = ({route}) => {
   const routeParams = route?.params;
 
   const [selected, setSelected] = useState(routeParams.trip ?? null);
+
+  const {
+    trips
+  } = useTrackingLocation();
 
   useAndroidBackHandler(() => {
     if (isFocused) {
@@ -49,7 +53,7 @@ const SelectRoute = ({route}) => {
         <SeparatorItems />
         <SubTitle>Você selecionou o veículo desejado, agora precisa selecionar qual rota a ser realizada.</SubTitle>
         <SeparatorItems />
-        {TRIPS.map((trip) => (
+        {trips.map((trip) => (
           <Row key={trip.value}>
             <Checkbox
               style={{borderRadius: 15, width: 25, height: 25}}

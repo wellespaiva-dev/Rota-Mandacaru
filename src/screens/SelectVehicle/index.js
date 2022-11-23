@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {BackHandler} from 'react-native';
+import {useTrackingLocation} from '../../hooks/useTrackingLocation';
 import RNPickerSelect from 'react-native-picker-select';
 import PickerStyle from '../../components/FormPicker/styles';
 import {useAndroidBackHandler} from "react-navigation-backhandler";
@@ -16,8 +16,8 @@ import HeaderBack from '../../components/HeaderBack';
 import Button from '../../components/Button';
 import IconCar from '../../assets/images/car.svg';
 import IconRight from '../../assets/images/right.svg'
-import VEHICLES from '../../mock/vehicles.json';
 import ExitApp from '../../components/AlertCustom/ExitApp';
+import LoadingView from '../../components/LoadingView';
 
 const SelectVehicle = ({route}) => {
 
@@ -26,6 +26,14 @@ const SelectVehicle = ({route}) => {
   const isFocused = useIsFocused();
 
   const navigation = useNavigation();
+
+  const {
+    getVehicles, 
+    getTrips, 
+    loadingVehicles, 
+    loadingTrips, 
+    vehicles
+  } = useTrackingLocation();
 
   const [selected, setSelected] = useState(routeParams?.vehicle ?? null);
   const [visible, setVisible] = useState(false);
@@ -39,8 +47,14 @@ const SelectVehicle = ({route}) => {
     return false;
   })
 
+  useEffect(() => {
+    getTrips()
+    getVehicles()
+  }, [])
+
   return (
     <>
+      {(loadingTrips || loadingVehicles) && (<LoadingView />)}
       <ExitApp
         visible={visible}
         setVisible={setVisible}
@@ -58,7 +72,7 @@ const SelectVehicle = ({route}) => {
             onValueChange={(value) => {
               setSelected(value);
             }}
-            items={VEHICLES}
+            items={vehicles}
             value={selected}
             placeholder={{
               label: 'Selecione o veículo',

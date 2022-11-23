@@ -15,8 +15,7 @@ import {
 import HeaderBack from '../../components/HeaderBack';
 import Button from '../../components/Button';
 import IconRight from '../../assets/images/right.svg';
-import TRIPS from '../../mock/trips.json';
-import VEHICLES from '../../mock/vehicles.json';
+import {useTrackingLocation} from '../../hooks/useTrackingLocation';
 
 const ValidateData = ({route}) => {
 
@@ -25,6 +24,11 @@ const ValidateData = ({route}) => {
   const isFocused = useIsFocused();
 
   const navigation = useNavigation();
+
+  const {
+    vehicles,
+    trips
+  } = useTrackingLocation();
 
   useAndroidBackHandler(() => {
     if (isFocused) {
@@ -37,13 +41,13 @@ const ValidateData = ({route}) => {
   })
 
   const getTripLabel = () => {
-    if (TRIPS[params?.trip - 1]) return TRIPS[params?.trip - 1].label
+    if (trips[params?.trip - 1]) return trips[params?.trip - 1].label
 
     return 'Rota não encontrada.'
   }
 
   const getVehicleLabel = () => {
-    if (VEHICLES[params?.Vehicle - 1]) return VEHICLES[params?.Vehicle - 1].label
+    if (vehicles[params?.Vehicle - 1]) return vehicles[params?.Vehicle - 1].label
 
     return 'Veículo não encontrado.'
   }
