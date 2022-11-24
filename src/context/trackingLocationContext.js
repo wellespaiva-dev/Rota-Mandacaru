@@ -1,7 +1,7 @@
 import {createContext, useEffect, useState} from "react";
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
-import { api } from "../services/api";
+import {api} from "../services/api";
 
 const LOCATION_TRACKING = 'location-tracking';
 
@@ -16,6 +16,8 @@ export const LocationTrackingProvider = ({children}) => {
   const [trips, setTrips]= useState([]);
   const [loadingTrips, setLoadingTrips] = useState(false);
   const [loadingVehicles, setLoadingVehicles] = useState(false);
+
+  const [posts, setPosts] = useState([]);
 
   const getVehicles = () => {
     setLoadingVehicles(true)
@@ -36,6 +38,14 @@ export const LocationTrackingProvider = ({children}) => {
     }).catch(error => {
       console.log(error)
       setLoadingTrips(false);
+    })
+  }
+
+  const getPosts = () => {
+    api.get('fuels').then((resp) => {
+      setPosts(resp.data);
+    }).catch(error => {
+      console.log(error);
     })
   }
 
@@ -89,6 +99,8 @@ export const LocationTrackingProvider = ({children}) => {
       trips,
       loadingTrips,
       loadingVehicles,
+      getPosts,
+      posts,
     }}>
       {children}
     </LocationTrackingContext.Provider>

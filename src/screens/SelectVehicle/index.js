@@ -32,7 +32,8 @@ const SelectVehicle = ({route}) => {
     getTrips, 
     loadingVehicles, 
     loadingTrips, 
-    vehicles
+    vehicles,
+    getPosts
   } = useTrackingLocation();
 
   const [selected, setSelected] = useState(routeParams?.vehicle ?? null);
@@ -50,6 +51,7 @@ const SelectVehicle = ({route}) => {
   useEffect(() => {
     getTrips()
     getVehicles()
+    getPosts()
   }, [])
 
   return (
@@ -84,7 +86,6 @@ const SelectVehicle = ({route}) => {
               fontSize: 16,
               placeholderTextColor: '#000',
             }}
-            // Icon={() => <IconPicker />}
           />
           <SeparatorTitle/>
           <IconCar />
