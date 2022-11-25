@@ -19,9 +19,11 @@ const ModalFinishRoute = ({
   visible = false, 
   setVisible = () => {},
   route = 'X',
-  note = 'Y',
+  note = '10',
   onPress = () => {}
 }) => {
+
+  const destino = route.split('-');
 
   return (
     <Modal
@@ -36,12 +38,12 @@ const ModalFinishRoute = ({
           <SeparatorItems />
           <Title>Parabéns!</Title>
           <SeparatorItems />
-          <Information>{`Você chegou no destino ${route} e os alunos receberam a pontuação ${note} !`}</Information>
+          <Information>{`Você chegou no destino${destino[1]} e os alunos receberam a pontuação ${note}!`}</Information>
           <SeparatorItems />
           <Button 
             onPress={onPress} 
             fullWidth={false} 
-            _width={247}
+            _width={`${247}px`}
           >
             Voltar ao início
           </Button>

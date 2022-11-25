@@ -12,6 +12,7 @@ import ModalFinishRoute from '../../components/AlertCustom/FinishRoute';
 import * as Progress from 'react-native-progress';
 
 
+
 const {width} = Dimensions.get('window');
 
 const Home = ({route}) => {
@@ -57,8 +58,8 @@ const Home = ({route}) => {
 
   const onModalPress = () => {
     stopLocationTracking()
-    navigation.navigate('SelectVehicle');
     setVisible(false);
+    navigation.navigate('SelectVehicle');
   }
 
   const calculationPercent = () => {
@@ -68,9 +69,11 @@ const Home = ({route}) => {
 
     const Lc = (autonomy * performance) / 100;
 
-    const Percent = (Lc * 100) / tank;
+    const PercentAux = (Lc * 100) / tank;
 
-    setPercent(Percent);
+    const newPercent = percent - (PercentAux / 100);
+
+    setPercent(newPercent);
   }
 
   const toFuel = () => {
@@ -94,7 +97,7 @@ const Home = ({route}) => {
   const finishRoute = () => {
     const finish = distance * 1000
 
-    return finish <= 2
+    return finish <= 15
   }
 
   useEffect(() => {
@@ -106,7 +109,7 @@ const Home = ({route}) => {
   }, [distance])
 
   useEffect(() => {
-    setTimeout(() => calculationPercent(), 10000);
+    setTimeout(() => calculationPercent(), 120000);
   }, [percent])
 
   if (!trip) return <LoadingView />;
@@ -117,6 +120,7 @@ const Home = ({route}) => {
         visible={visible}
         setVisible={setVisible}
         onPress={() => onModalPress()}
+        route={trip.label}
       />
       <HeaderBack
         title={trip.label}
@@ -155,7 +159,7 @@ const Home = ({route}) => {
         {isTracking ? (
           <Button 
             fullWidth={false} 
-            _width={100} 
+            _width={`${100}px`} 
             color='error'
             onPress={stopLocationTracking}
           >
@@ -176,7 +180,7 @@ const Home = ({route}) => {
           </Button>
           <SeparatorHorizontal />
           {isTracking && (
-            <Button _width={150} fullWidth={false} onPress={() => toFuel()}>Abastecer</Button>
+            <Button _width={`${150}px`} fullWidth={false} onPress={() => setVisible(true)}>Abastecer</Button>
           )}
         </Row>
       </BottomBox>
