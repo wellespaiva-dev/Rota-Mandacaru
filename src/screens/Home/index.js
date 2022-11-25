@@ -180,7 +180,7 @@ const Home = ({route}) => {
           </Button>
           <SeparatorHorizontal />
           {isTracking && (
-            <Button _width={`${150}px`} fullWidth={false} onPress={() => setVisible(true)}>Abastecer</Button>
+            <Button _width={`${150}px`} fullWidth={false} onPress={() => toFuel(true)}>Abastecer</Button>
           )}
         </Row>
       </BottomBox>
