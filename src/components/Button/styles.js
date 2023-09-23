@@ -34,7 +34,7 @@ export const ButtonLayout = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   padding: 10px 10px 10px 18px;
-  width: ${({fullWidth}) => fullWidth ? `${width - 40}px` : 'auto'};
+  width: ${({fullWidth, _width}) => fullWidth ? `${width - 40}px` : _width || 'auto'};
   border-radius: 100px;
   flex-direction: row;
 `

@@ -3,12 +3,16 @@ import {Dimensions, StyleSheet} from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 
+import iconPosto from '../../assets/images/posto.png'
+
+import iconInit from '../../assets/images/initPoint.png'
+
 const {width, height} = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-const Map = ({currentCoords, destinationCoords, onReady}) => {
+const Map = ({currentCoords, destinationCoords, onReady, setDistance, setDuration, posts}) => {
 
   const MapRef = useRef(null);
 
@@ -33,8 +37,14 @@ const Map = ({currentCoords, destinationCoords, onReady}) => {
             rotate: !currentCoords?.heading ? '0deg' : `${currentCoords?.heading}deg`
           }]
         }}
+        icon={iconInit}
       />
       <Marker coordinate={{latitude: destinationCoords.latitude, longitude: destinationCoords.longitude}} />
+      {posts.map((item) => {
+        return (
+          <Marker coordinate={{latitude: item.coords.latitude, longitude: item.coords.longitude}} icon={iconPosto} />
+        )
+      })}
       <MapViewDirections
         origin={{latitude: currentCoords.latitude, longitude: currentCoords.longitude}}
         destination={{latitude: destinationCoords.latitude, longitude: destinationCoords.longitude}}
@@ -42,6 +52,8 @@ const Map = ({currentCoords, destinationCoords, onReady}) => {
         strokeWidth={3}
         strokeColor="blue"
         onReady={(result) => {
+          setDistance(result.distance);
+          setDuration(result.duration);
           MapRef.current.fitToCoordinates(
             result.coordinates,
             {
